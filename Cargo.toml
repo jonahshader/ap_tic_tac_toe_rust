@@ -1,0 +1,7 @@
+[package]
+name = "ap_tic_tac_toe_rust"
+version = "0.1.0"
+authors = ["Jonah Shader <jonah.shader@gmail.com>"]
+
+[dependencies]
+rand = "0.3.14"
