@@ -1,20 +1,23 @@
 extern crate rand;
-mod board;
-
+mod game;
 use std::io;
-use board::MoveResult;
-use board::Board;
-use board::MetaBoard;
+//use board::MoveResult;
+//use board::Board;
+//use board::MetaBoard;
 //use rand::Rng;
 //use std::cmp::Ordering;
 
 fn main() {
 
-    let mut temp_board: Board = Default::default();
+//    let mut temp_board: Board = Default::default();
+//
+//    let mut temp_meta_board: MetaBoard = Default::default();
+//
+//    temp_meta_board.print_board();
 
-    let mut temp_meta_board: MetaBoard = Default::default();
+    let mut game: game::Game = Default::default();
 
-    temp_meta_board.print_board();
+    game.play();
 
 //    loop {
 //        temp_board.print_board();

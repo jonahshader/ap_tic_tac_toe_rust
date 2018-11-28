@@ -48,6 +48,13 @@ impl Board {
             self.force_move(pos, tile_value);
             if self.check_win(pos, tile_value) {
                 self.winner = tile_value;
+
+                // set entire board to winner
+                for i in 0..3 {
+                    for j in 0..3 {
+                        self.board[i][j] = tile_value;
+                    }
+                }
                 return MoveResult::Win;
             } else {
                 return MoveResult::Success;
@@ -176,18 +183,32 @@ impl Default for MetaBoard {
         MetaBoard {
             board: [[Default::default(); 3]; 3],
             winner: 0,
-            moves: 0
+            moves: 0,
         }
     }
 }
 
 impl MetaBoard {
-    /// returns true if a move at pos is legal
+    /// returns true if a move at the meta board is possible
     pub fn check_can_move(&self, meta_pos: (usize, usize)) -> bool {
         self.board[meta_pos.0][meta_pos.1].winner == 0
     }
 
     pub fn try_move(&mut self, meta_pos: (usize, usize), pos: (usize, usize), tile_value: i8) -> MoveResult {
+        if self.check_can_move(meta_pos) {
+            match self.board[meta_pos.0][meta_pos.1].try_move(pos, tile_value) {
+                MoveResult::Fail => {return MoveResult::Fail;},
+                MoveResult::Success => {return MoveResult::Success;},
+                MoveResult::Win => {
+                    if self.check_win(meta_pos, tile_value) {
+                        return MoveResult::Win;
+                    } else {
+                        return MoveResult::Success;
+                    }
+                },
+            }
+//            return self.board[meta_pos.0][meta_pos.1].try_move(pos, tile_value);
+        }
         MoveResult::Fail
     }
 
